@@ -16,6 +16,7 @@ class PyLightDMX:
         self.data = np.zeros([self.max_channels + 1], dtype='uint8')
         self.frame_delay = 1 / (refresh_rate / 1000)
 
+        #  Timing description: https://www.freestylersupport.com/wiki/dmx_basics:dmx_timing
         self.Break_us = 88.0
         self.MAB_us = 8.0
 
@@ -33,18 +34,14 @@ class PyLightDMX:
             warnings.warn(f'{e}. List must contain tuples of (id, data)!', PyLightDMXWarning, stacklevel=2)
 
     def send(self):
-        # Send Break : 88us - 1s
         self.serial_connection.break_condition = True
         time.sleep(self.Break_us / 1000000.0)
 
-        # Send MAB : 8us - 1s
         self.serial_connection.break_condition = False
         time.sleep(self.MAB_us / 1000000.0)
 
-        # Send Data
         self.serial_connection.write(bytearray(self.data))
 
-        # Sleep
         time.sleep(self.frame_delay / 1000.0)  # between 0 - 1 sec
 
     def send_zeros(self):
