@@ -26,7 +26,7 @@ dmx.send()
 
 ## Additional methods
 
-`set_data_list()`: You can set multiple values at one by passing a list of tuples to this method:
+`set_data_list()`: You can set multiple values at once by passing a list of tuples to this method:
 ```python
 dmx.set_data_list([(1, 255), (2, 255), (3, 255)])
 ```
